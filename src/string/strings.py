@@ -124,7 +124,7 @@ class Strings:
             bool: True si la cadena representa un número entero, False en caso contrario
         """
         try:
-            int(texto)  # Intentamos convertirlo a entero
+            int(texto)
             return True
         except ValueError:
             return False
@@ -140,8 +140,15 @@ class Strings:
         Returns:
             str: Cadena cifrada
         """
-        pass
-    
+        for char in texto:
+                if char.isalpha():  
+                    base = ord('A') if char.isupper() else ord('a')
+                    nuevo_char = chr(base + (ord(char) - base + desplazamiento) % 26)
+                    resultado += nuevo_char
+                else:
+                    resultado += char
+        return resultado
+
     def descifrar_cesar(self, texto, desplazamiento):
         """
         Descifra una cadena cifrada con el método César.
@@ -153,7 +160,17 @@ class Strings:
         Returns:
             str: Cadena descifrada
         """
-        pass
+        resultado = ""
+
+        for char in texto:
+            if char.isalpha():  
+                base = ord('A') if char.isupper() else ord('a')
+                nuevo_char = chr(base + (ord(char) - base - desplazamiento) % 26)
+                resultado += nuevo_char
+            else:
+                resultado += char  
+
+        return resultado
     
     def encontrar_subcadena(self, texto, subcadena):
         """
@@ -166,4 +183,12 @@ class Strings:
         Returns:
             list: Lista con las posiciones iniciales de cada ocurrencia
         """
-        pass
+        posiciones = []
+        longitud_texto = len(texto)
+        longitud_subcadena = len(subcadena)
+
+        for i in range(longitud_texto - longitud_subcadena + 1):
+            if texto[i:i + longitud_subcadena] == subcadena:
+                posiciones.append(i)
+
+        return posiciones
